@@ -42,6 +42,13 @@
 
       cursor: pointer;
     }
+
+    #panel {
+      position: fixed;
+      top: 20;
+      left: 50%;
+      transform: translateX(-50%)
+    }
   </style>
 </head>
 
@@ -56,6 +63,10 @@
       Look: MOUSE
     </div>
 
+  </div>
+
+  <div id="panel">
+    Move: WASD Jump: SPACE
   </div>
 
   <script type="module">
@@ -90,7 +101,7 @@
     function init() {
 
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-      camera.position.y = 10;
+      camera.position.y = 40;
 
       scene = new THREE.Scene();
       scene.background = new THREE.Color(0xffffff);
@@ -99,6 +110,11 @@
       const light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
       light.position.set(0.5, 1, 0.75);
       scene.add(light);
+
+      // sub light
+      const dirLight2 = new THREE.DirectionalLight(0x002288);
+      dirLight2.position.set(- 1, - 1, - 1);
+      scene.add(dirLight2);
 
       controls = new PointerLockControls(camera, document.body);
 
@@ -233,35 +249,49 @@
 
       // objects
 
-      const boxGeometry = new THREE.BoxBufferGeometry(20, 20, 20).toNonIndexed();
+      // const boxGeometry = new THREE.BoxBufferGeometry(20, 20, 20).toNonIndexed();
 
-      position = boxGeometry.attributes.position;
-      const colorsBox = [];
+      // position = boxGeometry.attributes.position;
+      // const colorsBox = [];
 
-      for (let i = 0, l = position.count; i < l; i++) {
+      // for (let i = 0, l = position.count; i < l; i++) {
 
-        color.setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
-        colorsBox.push(color.r, color.g, color.b);
+      //   color.setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
+      //   colorsBox.push(color.r, color.g, color.b);
 
-      }
+      // }
 
-      boxGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colorsBox, 3));
+      // boxGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colorsBox, 3));
+
+      // for (let i = 0; i < 500; i++) {
+
+      //   const boxMaterial = new THREE.MeshPhongMaterial({ specular: 0xffffff, flatShading: true, vertexColors: true });
+      //   boxMaterial.color.setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
+
+      //   const box = new THREE.Mesh(boxGeometry, boxMaterial);
+      //   box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
+      //   box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
+      //   box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
+
+      //   scene.add(box);
+      //   objects.push(box);
+
+      // }
+
+      const geometry = new THREE.CylinderBufferGeometry(0, 20, 70, 4, 1);
+      const material = new THREE.MeshPhongMaterial({ color: 0xffffff, flatShading: true });
 
       for (let i = 0; i < 500; i++) {
 
-        const boxMaterial = new THREE.MeshPhongMaterial({ specular: 0xffffff, flatShading: true, vertexColors: true });
-        boxMaterial.color.setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75);
-
-        const box = new THREE.Mesh(boxGeometry, boxMaterial);
-        box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
-        box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
-        box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
-
-        scene.add(box);
-        objects.push(box);
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.x = Math.random() * 1200 - 600;
+        mesh.position.y = 0;
+        mesh.position.z = Math.random() * 1200 - 600;
+        mesh.updateMatrix();
+        mesh.matrixAutoUpdate = false;
+        scene.add(mesh);
 
       }
-
       //
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -306,8 +336,8 @@
 
         const delta = (time - prevTime) / 1000;
 
-        velocity.x -= velocity.x * 10.0 * delta;
-        velocity.z -= velocity.z * 10.0 * delta;
+        velocity.x -= velocity.x * 6.0 * delta;
+        velocity.z -= velocity.z * 6.0 * delta;
 
         velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
@@ -351,5 +381,7 @@
 
   </script>
 </body>
+
+>>>>>>> eed8f5fc2d2d64b0101b498c675b32dc2cba1d60
 
 </html>
