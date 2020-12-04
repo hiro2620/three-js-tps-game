@@ -336,8 +336,8 @@
 
         const delta = (time - prevTime) / 1000;
 
-        velocity.x -= velocity.x * 6.0 * delta;
-        velocity.z -= velocity.z * 6.0 * delta;
+        velocity.x -= velocity.x * 10.0 * delta;
+        velocity.z -= velocity.z * 10.0 * delta;
 
         velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
@@ -345,8 +345,8 @@
         direction.x = Number(moveRight) - Number(moveLeft);
         direction.normalize(); // this ensures consistent movements in all directions
 
-        if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
-        if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
+        if (moveForward || moveBackward) velocity.z -= direction.z * 600.0 * delta;
+        if (moveLeft || moveRight) velocity.x -= direction.x * 600.0 * delta;
 
         if (onObject === true) {
 
