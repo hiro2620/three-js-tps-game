@@ -254,7 +254,7 @@
 
       // objects
 
-      const boxGeometry = new THREE.BoxBufferGeometry(20, 5, 20).toNonIndexed();
+      const boxGeometry = new THREE.BoxBufferGeometry(24, 5, 48).toNonIndexed();
 
       position = boxGeometry.attributes.position;
       const colorsBox = [];
@@ -278,12 +278,12 @@
         const box = new THREE.Mesh(boxGeometry, boxMaterial);
         // box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
         // box.position.x = Math.floor(Math.random() * 3 - 1.5) * 16;
-        box.position.x = positionX + Math.floor(Math.random() * 3 - 1.5) * 16;
+        box.position.x = positionX + (Math.random() - 0.5) * 0.018 * (-(i ** 2 - 500) + 500 ** 2 * 0.018);
         positionX = box.position.x
         // box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
-        box.position.y = (i * 20 + 10) * 0.6;
+        box.position.y = (i * 20 + 10) * 0.8;
         // box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
-        box.position.z = -100 - i * 2 * 22;
+        box.position.z = -(80 + i * 2 * 34);
 
         scene.add(box);
         objects.push(box);
